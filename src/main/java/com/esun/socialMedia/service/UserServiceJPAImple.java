@@ -1,9 +1,7 @@
 package com.esun.socialMedia.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -67,8 +65,6 @@ public class UserServiceJPAImple implements UserService {
 		if(userOptional.isPresent() != false) {
 			userRepositoryByUUID.deleteById(uuid);
 			state = true;
-		}else {
-			state = false;
 		}
 		return state;
 	}

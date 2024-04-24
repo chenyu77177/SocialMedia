@@ -1,6 +1,5 @@
 package com.esun.socialMedia.controller;
 
-import java.io.Console;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.esun.socialMedia.model.User;
 import com.esun.socialMedia.service.UserService;
 
-import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @CrossOrigin
