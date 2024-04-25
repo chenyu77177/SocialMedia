@@ -1,0 +1,12 @@
+DROP TABLE IF EXISTS 'users';
+  
+CREATE TABLE 'users' (
+  user_id INT AUTO_INCREMENT  PRIMARY KEY,
+  username VARCHAR(250) NOT NULL,
+  email VARCHAR(250) DEFAULT NULL
+);
+
+CREATE PROCEDURE get_users()
+BEGIN
+    SELECT * FROM users;
+END
