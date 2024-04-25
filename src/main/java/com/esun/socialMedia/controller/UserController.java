@@ -29,20 +29,20 @@ public class UserController {
 		 return userService.getAllUser();
 	 }
 	 
-	 @PostMapping("/user/save")
+	 @PostMapping("/user/newUser")
 	 public String saveUser(@RequestBody User user) {
 		 return userService.saveUser(user);
 	 }
 	 
-	 @PostMapping("/user/update/{uuid}")
-	 public String updateUser(@RequestBody User user, @PathVariable UUID uuid) {
-		 return userService.updateUser(user, uuid);
+	 @PostMapping("/user/update/{user_id}")
+	 public String updateUser(@RequestBody User user, @PathVariable UUID user_id) {
+		 return userService.updateUser(user, user_id);
 	 }
 	 
-	 @DeleteMapping("/user/remove/{uuid}")
-	 public boolean removeUser(@PathVariable UUID uuid) {
+	 @DeleteMapping("/user/remove/{user_id}")
+	 public boolean removeUser(@PathVariable UUID user_id) {
 		 
-		 return userService.removeUser(uuid);
+		 return userService.removeUser(user_id);
 	 }
 	 
 }

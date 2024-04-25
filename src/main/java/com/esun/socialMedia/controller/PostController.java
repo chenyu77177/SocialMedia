@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.esun.socialMedia.model.Post;
@@ -28,18 +29,19 @@ public class PostController {
 		return postService.getAllPost();
 	}
 	
-	@PostMapping("/post/save/{user_id}")
-	public String savePost(@RequestBody Post post, @PathVariable UUID user_id) {
+	@PostMapping("/post/newPost")
+	public String savePost(@RequestBody Post post, @RequestParam(value = "user_id") UUID user_id) {
 		return postService.savePost(post, user_id);
 	}
 	
-	@PostMapping("/post/update/{user_id}")
-	public String updatePost(@RequestBody Post post, @PathVariable UUID user_id) {
+	@PostMapping("/post/update/{post_id}")
+	public String updatePost(@RequestBody Post post, @PathVariable Long post_id, @RequestParam(value = "user_id") UUID user_id) {
+		post.setPost_id(post_id);
 		return postService.updateUser(post, user_id);
 	}
 	
 	@DeleteMapping("/post/remove/{post_id}")
-	public boolean removePost(@PathVariable Long post_id) {
-		return postService.removeUser(post_id);
+	public String removePost(@PathVariable Long post_id, @RequestParam(value = "user_id") UUID user_id) {
+		return postService.removeUser(post_id, user_id);
 	}
 }

@@ -14,6 +14,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,7 +31,7 @@ public class Post {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long post_id;
 	//@JsonBackReference
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JsonIgnore
 	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
 	private User user;
@@ -40,9 +41,16 @@ public class Post {
 	private Set<Comment> comments;
 	private String content;
 	private Date createdAt;
+	private Date updatedAt;
 	
 	@PrePersist
 	public void createdAt() {
 		createdAt = new Date();
 	}
+	
+	@PreUpdate
+	public void setLastUpdate() {
+		updatedAt = new Date();
+	}
+
 }

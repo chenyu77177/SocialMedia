@@ -39,6 +39,9 @@ public class User {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	@EqualsAndHashCode.Exclude
 	private Set<Post> posts;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	@EqualsAndHashCode.Exclude
+	private Set<Comment> comment;
 	
 	@PrePersist
 	public void setLastCreate() {

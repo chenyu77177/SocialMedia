@@ -40,11 +40,14 @@ public class UserServiceJPAImple implements UserService {
 	public String updateUser(User user, UUID uuid) {
 		String msg = "";
 		Optional<User> userOptional = userRepositoryByUUID.findById(uuid);
+		//檢查使用者是否存在
 		if(userOptional.isPresent() != false) {
 			User userDb = userOptional.get();
+			//姓名是否變更
 			if (user.getUsername() != null){
 				userDb.setUsername(user.getUsername());
 			}
+			//介紹是否變更
 			if(user.getBiography() != null) {
 				userDb.setBiography(user.getBiography());				
 			}
@@ -62,6 +65,7 @@ public class UserServiceJPAImple implements UserService {
 	public boolean removeUser(UUID uuid) {
 		boolean state = false;
 		Optional<User> userOptional = userRepositoryByUUID.findById(uuid);
+		//使用者是否存在
 		if(userOptional.isPresent() != false) {
 			userRepositoryByUUID.deleteById(uuid);
 			state = true;

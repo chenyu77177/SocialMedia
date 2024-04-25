@@ -33,6 +33,7 @@ public class PostRepositoryJPAImple implements PostService {
 		String msg = "";
 		
 		Optional<User> userOptional = userRepositoryByUUID.findById(user_id);
+		//user是否存在
 		if(userOptional.isPresent() != false) {
 			User userDb = userOptional.get();
 			post.setUser(userDb);
@@ -48,13 +49,17 @@ public class PostRepositoryJPAImple implements PostService {
 	public String updateUser(Post post, UUID user_id) {
 		String msg = "";
 		Optional<Post> postOptional = postRepository.findById(post.getPost_id());
+		//取得發文者ID
 		UUID postFromUserID = postOptional.get().getUser().getUser_id();
+		//身分驗證
 		if(!postFromUserID.equals(user_id)) {
 			msg = "無此權限";
 			return msg;
 		}
+		//檢查貼文是否存在
 		if(postOptional.isPresent() != false) {
 			Post postDb = postOptional.get();
+			//檢查是否變更內容
 			if(post.getContent() != null) {
 				postDb.setContent(post.getContent());
 				postRepository.save(postDb);
@@ -67,14 +72,26 @@ public class PostRepositoryJPAImple implements PostService {
 	}
 
 	@Override
-	public boolean removeUser(Long post_id) {
-		boolean state = false;
+	public String removeUser(Long post_id, UUID user_id) {
+		String msg = "";
 		Optional<Post> postOptional = postRepository.findById(post_id);
+		Optional<User> userOptional = userRepositoryByUUID.findById(user_id);
+		//檢查user 是否存在
+		if(userOptional == null) {
+			msg = "user 不存在";
+			return msg;
+		}
+		//非發文者
+		if(!postOptional.get().getUser().getUser_id().equals(user_id)) {
+			msg = "無操作權限";
+			return msg;
+		}
+		//貼文存在
 		if(postOptional.isPresent() != false) {
 			postRepository.deleteById(post_id);
-			state = true;
+			msg = "success";
 		}
-		return state;
+		return msg;
 	}
 
 }
