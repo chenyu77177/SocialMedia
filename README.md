@@ -40,6 +40,7 @@ comment
 	*getCommentByPost
 	http://localhost:8080/api/comment?post_id=4
 	
+	
 	*new
 	http://localhost:8080/api/comment/newComment?user_id=d7423830-e326-4613-921f-07217850cabe&post_id=4
 	{
@@ -51,6 +52,10 @@ comment
 	{
 		"content": "123"
 	}
-		
+	
+	
+	
 	*remove
 	http://localhost:8080/api/comment/remove/2?user_id=D7423830-e326-4613-921f-07217850cabe
+	
+	
