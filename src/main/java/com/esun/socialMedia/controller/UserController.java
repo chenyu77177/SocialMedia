@@ -23,6 +23,8 @@ import com.esun.socialMedia.service.UserService;
 public class UserController {
 	@Autowired
 	private UserService userService;
+//	@Autowired
+//	private AuthenticationService authenticationService;
 	
 	 @GetMapping("/users")
 	 public List<User> getAllUser(){
@@ -41,8 +43,12 @@ public class UserController {
 	 
 	 @DeleteMapping("/user/remove/{user_id}")
 	 public boolean removeUser(@PathVariable UUID user_id) {
-		 
 		 return userService.removeUser(user_id);
 	 }
+	 
+//	 @PostMapping("/user/login")
+//	 public boolean login(User user) {
+//		 return authenticationService.authenticateUser(user.getPhone(), user.getPassword());
+//	 }
 	 
 }

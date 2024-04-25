@@ -19,6 +19,8 @@ public class UserServiceJPAImple implements UserService {
 	private UserRepository userRepository;
 	@Autowired
 	private UserRepositoryByUUID userRepositoryByUUID;
+//	@Autowired
+//	private PWDEncoderService pwdEncoderService;
 	
 	@Override
 	public List<User> getAllUser() {
@@ -31,6 +33,8 @@ public class UserServiceJPAImple implements UserService {
 	public String saveUser(User user) {
 		UUID uuid = UUID.randomUUID();
 		user.setUser_id(uuid);
+//		//密碼加鹽並hash
+//		user.setPassword(pwdEncoderService.encodePassword(user.getPassword(), pwdEncoderService.generateSalt()));
 		User db = userRepository.save(user);
 		return db.getUser_id().toString();
 	}
