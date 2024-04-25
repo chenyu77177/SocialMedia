@@ -1,9 +1,10 @@
 API使用範例
 
 user
-	*getall
+	*getall取得全部使用者
 	http://localhost:8080/api/users
-	*new
+	
+ 	*new新增使用者
 	http://localhost:8080/api/user/newUser
 	{
 	  "username": "andy",
@@ -12,12 +13,14 @@ user
 	  "password": "12345678",
 	  "biography": "您好，我是吳先生~"
 	}
-	*update
+ 
+	*update更新使用者資訊
 	http://localhost:8080/api/user/update/d7423830-e326-4613-921f-07217850cabe
 	{
 	  "username": "王大陸"
 	}
-	*remove
+
+	*remove 移除使用者
 	http://localhost:8080/api/user/remove/e7aadf4e-0649-4776-b308-96b2f11745f6
 
 post
