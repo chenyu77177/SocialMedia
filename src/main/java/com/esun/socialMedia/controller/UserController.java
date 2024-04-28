@@ -23,12 +23,15 @@ import com.esun.socialMedia.service.UserService;
 public class UserController {
 	@Autowired
 	private UserService userService;
-//	@Autowired
-//	private AuthenticationService authenticationService;
 	
 	 @GetMapping("/users")
 	 public List<User> getAllUser(){
 		 return userService.getAllUser();
+	 }
+	 
+	 @PostMapping("/user/login")
+	 public String login(@RequestBody User user) {
+		 return userService.login(user.getPhone(), user.getPassword());
 	 }
 	 
 	 @PostMapping("/user/newUser")

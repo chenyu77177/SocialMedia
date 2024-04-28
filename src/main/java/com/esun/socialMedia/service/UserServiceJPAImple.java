@@ -1,5 +1,6 @@
 package com.esun.socialMedia.service;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -19,8 +20,8 @@ public class UserServiceJPAImple implements UserService {
 	private UserRepository userRepository;
 	@Autowired
 	private UserRepositoryByUUID userRepositoryByUUID;
-//	@Autowired
-//	private PWDEncoderService pwdEncoderService;
+	@Autowired 
+	private PasswordEncoderService passwordEncoderService;
 	
 	@Override
 	public List<User> getAllUser() {
@@ -33,8 +34,15 @@ public class UserServiceJPAImple implements UserService {
 	public String saveUser(User user) {
 		UUID uuid = UUID.randomUUID();
 		user.setUser_id(uuid);
-//		//密碼加鹽並hash
-//		user.setPassword(pwdEncoderService.encodePassword(user.getPassword(), pwdEncoderService.generateSalt()));
+		//密碼加鹽並hash
+		String salt = passwordEncoderService.generateSalt();
+		user.setSalt(salt);
+		try {
+			String encryptedPassword = passwordEncoderService.hashPassword(user.getPassword(), salt);
+			user.setPassword(encryptedPassword);
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
 		User db = userRepository.save(user);
 		return db.getUser_id().toString();
 	}
@@ -75,6 +83,25 @@ public class UserServiceJPAImple implements UserService {
 			state = true;
 		}
 		return state;
+	}
+
+	@Override
+	public String login(String phone, String rawPassword) {
+		Optional<User> userOptional = userRepository.findByPhone(phone);
+		if(userOptional != null) {
+			String salt = userOptional.get().getSalt();
+			String storedPassword = userOptional.get().getPassword();
+			boolean verify_result;
+			try {
+				verify_result = passwordEncoderService.verifyPassword(rawPassword, storedPassword, salt);
+				if(verify_result) {
+					return userOptional.get().getUser_id().toString();					
+				}
+			} catch (NoSuchAlgorithmException e) {
+				e.printStackTrace();
+			}
+		}
+		return "failed";
 	}
 
 	

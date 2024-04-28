@@ -33,12 +33,14 @@ public class User {
 	private String username;
 	@Column(nullable = false)
 	private String email;
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private String phone;
 	@Column(nullable = false)
 	private String password;
 	@Column(nullable = false)
 	private String biography;
+	@Column(nullable = false)
+	private String salt;
 	private Date createdAt;
 	//@JsonManagedReference
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")

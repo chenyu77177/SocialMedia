@@ -10,4 +10,5 @@ public interface UserService {
 	String saveUser(User user);
 	String updateUser(User user, UUID uuid);
 	boolean removeUser(UUID uuid);
+	String login(String phone, String password);
 }
