@@ -29,10 +29,15 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.UUID)
 	@Column(nullable = false, unique = true, columnDefinition = "UUID")
 	private UUID user_id;
+	@Column(nullable = false)
 	private String username;
+	@Column(nullable = false)
 	private String email;
+	@Column(nullable = false)
 	private String phone;
+	@Column(nullable = false)
 	private String password;
+	@Column(nullable = false)
 	private String biography;
 	private Date createdAt;
 	//@JsonManagedReference

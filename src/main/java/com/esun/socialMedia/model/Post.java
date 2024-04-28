@@ -6,6 +6,7 @@ import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -29,6 +30,7 @@ import lombok.NoArgsConstructor;
 public class Post {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(nullable = false, unique = true)
 	private Long post_id;
 	//@JsonBackReference
 	@ManyToOne
@@ -39,6 +41,7 @@ public class Post {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
 	@EqualsAndHashCode.Exclude
 	private Set<Comment> comments;
+	@Column(nullable = false)
 	private String content;
 	private Date createdAt;
 	private Date updatedAt;
