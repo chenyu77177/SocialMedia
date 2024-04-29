@@ -3,7 +3,7 @@ package com.esun.socialMedia.model;
 import java.util.Date;
 import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -32,14 +32,13 @@ public class Post {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(nullable = false, unique = true)
 	private Long post_id;
-	//@JsonBackReference
 	@ManyToOne
-	@JsonIgnore
+	@JsonIgnoreProperties(value = "posts")
 	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
 	private User user;
-	//@JsonManagedReference
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
 	@EqualsAndHashCode.Exclude
+	@JsonIgnoreProperties(value = "posts")
 	private Set<Comment> comments;
 	@Column(nullable = false)
 	private String content;

@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Set;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -36,19 +37,21 @@ public class User {
 	@Column(nullable = false, unique = true)
 	private String phone;
 	@Column(nullable = false)
+	@JsonIgnore
 	private String password;
 	@Column(nullable = false)
 	private String biography;
 	@Column(nullable = false)
+	@JsonIgnore
 	private String salt;
 	private Date createdAt;
-	//@JsonManagedReference
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	@EqualsAndHashCode.Exclude
 	private Set<Post> posts;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	@EqualsAndHashCode.Exclude
-	private Set<Comment> comment;
+	@JsonIgnore
+	private Set<Comment> comments;
 	
 	@PrePersist
 	public void setLastCreate() {

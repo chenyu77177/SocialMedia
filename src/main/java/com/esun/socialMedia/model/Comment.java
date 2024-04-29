@@ -3,6 +3,7 @@ package com.esun.socialMedia.model;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -31,14 +32,12 @@ public class Comment {
 	private Long comment_id;
 	@Column(nullable = false)
 	private String content;
-	//@JsonBackReference
 	@ManyToOne
 	@JsonIgnore
 	@JoinColumn(name = "post_id", referencedColumnName = "post_id")
 	private Post post;
-	//@JsonBackReference
 	@ManyToOne
-	@JsonIgnore
+	@JsonIgnoreProperties({"posts", "users"})
 	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
 	private User user;
 	private Date createdAt;
