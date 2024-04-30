@@ -36,8 +36,14 @@ public class UserController {
 	 }
 	 
 	 @PostMapping("/user/newUser")
-	 public String saveUser(@RequestBody User user) {
-		 return userService.saveUser(user);
+	 public String saveUser(@RequestBody Map<String, Object> user) {
+		 User tempUser = new User();
+		 tempUser.setUsername(user.get("username").toString());
+		 tempUser.setPassword(user.get("password").toString());
+		 tempUser.setPhone(user.get("phone").toString());
+		 tempUser.setEmail(user.get("email").toString());
+		 tempUser.setBiography(user.get("biography").toString());
+		 return userService.saveUser(tempUser);
 	 }
 	 
 	 @PostMapping("/user/update/{user_id}")
