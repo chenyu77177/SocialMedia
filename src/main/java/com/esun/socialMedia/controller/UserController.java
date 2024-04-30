@@ -1,6 +1,7 @@
 package com.esun.socialMedia.controller;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +31,8 @@ public class UserController {
 	 }
 	 
 	 @PostMapping("/user/login")
-	 public String login(@RequestBody User user) {
-		 return userService.login(user.getPhone(), user.getPassword());
+	 public Map<String, Object> login(@RequestBody Map<String, Object> userMap) {
+		 return userService.login(userMap.get("phone").toString(), userMap.get("password").toString());
 	 }
 	 
 	 @PostMapping("/user/newUser")

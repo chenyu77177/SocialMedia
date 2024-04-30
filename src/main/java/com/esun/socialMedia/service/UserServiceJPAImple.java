@@ -2,7 +2,9 @@ package com.esun.socialMedia.service;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -86,22 +88,41 @@ public class UserServiceJPAImple implements UserService {
 	}
 
 	@Override
-	public String login(String phone, String rawPassword) {
+	public Map<String, Object> login(String phone, String rawPassword) {
 		Optional<User> userOptional = userRepository.findByPhone(phone);
+		Map<String, Object> login_result = new HashMap<>();
+		login_result.put("db", userOptional.get());
+		login_result.put("dbPWD", userOptional.get().getPassword());
+		login_result.put("rawPWD", rawPassword);
+		login_result.put("rawPhone", phone);
 		if(userOptional != null) {
 			String salt = userOptional.get().getSalt();
 			String storedPassword = userOptional.get().getPassword();
 			boolean verify_result;
 			try {
+				login_result.put("hashData", passwordEncoderService.hashPassword(rawPassword, salt));
+			} catch (NoSuchAlgorithmException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			try {
 				verify_result = passwordEncoderService.verifyPassword(rawPassword, storedPassword, salt);
 				if(verify_result) {
-					return userOptional.get().getUser_id().toString();					
+					login_result.put("user_id", userOptional.get().getUser_id().toString());
+					login_result.put("state", verify_result);					
+					return login_result;				
+				}else {
+					login_result.put("user_id", null);
+					login_result.put("state", verify_result);					
+					return login_result;				
 				}
 			} catch (NoSuchAlgorithmException e) {
 				e.printStackTrace();
 			}
 		}
-		return "failed";
+		login_result.put("user_id", null);
+		login_result.put("state", false);					
+		return null;
 	}
 
 	
