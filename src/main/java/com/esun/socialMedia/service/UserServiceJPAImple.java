@@ -110,6 +110,7 @@ public class UserServiceJPAImple implements UserService {
 				if(verify_result) {
 					login_result.put("user_id", userOptional.get().getUser_id().toString());
 					login_result.put("state", verify_result);					
+					login_result.put("username", userOptional.get().getUsername().toString());					
 					return login_result;				
 				}else {
 					login_result.put("user_id", null);
