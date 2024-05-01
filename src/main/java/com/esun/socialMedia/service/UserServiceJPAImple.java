@@ -126,5 +126,12 @@ public class UserServiceJPAImple implements UserService {
 		return null;
 	}
 
-	
+	@Override
+	public boolean userIdCheck(UUID uuid) {
+		Optional<User> userOptional = userRepositoryByUUID.findById(uuid);
+		if(userOptional.isPresent()) {
+			return true;
+		}
+		return false;
+	}
 }

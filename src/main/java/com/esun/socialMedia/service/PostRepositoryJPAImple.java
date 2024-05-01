@@ -27,6 +27,17 @@ public class PostRepositoryJPAImple implements PostService {
 		postRepository.findAll().forEach(post -> postList.add(post));
 		return postList;
 	}
+	
+	@Override
+	public Post getPostById(Long post_id) {
+		Post post = new Post();
+		Optional<Post> postOptional = postRepository.findById(post_id);
+		if(postOptional.isPresent()) {
+			post = postOptional.get();
+			return post;
+		}
+		return null;
+	}
 
 	@Override
 	public String savePost(Post post, UUID user_id) {

@@ -29,6 +29,14 @@ public class PostController {
 		return postService.getAllPost();
 	}
 	
+	@GetMapping("/post/get")
+	public Post getPost (@RequestParam(value = "post_id") Long post_id) {
+		if(post_id != null && post_id != 0) {
+			return postService.getPostById(post_id);			
+		}
+		return null;
+	}
+	
 	@PostMapping("/post/newPost")
 	public String savePost(@RequestBody Post post, @RequestParam(value = "user_id") UUID user_id) {
 		return postService.savePost(post, user_id);

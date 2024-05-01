@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.esun.socialMedia.model.User;
@@ -28,6 +29,11 @@ public class UserController {
 	 @GetMapping("/users")
 	 public List<User> getAllUser(){
 		 return userService.getAllUser();
+	 }
+	 
+	 @GetMapping("/user/idCheck")
+	 public boolean userIdCheck(@RequestParam(value = "user_id") UUID user_id) {
+		 return userService.userIdCheck(user_id);
 	 }
 	 
 	 @PostMapping("/user/login")
@@ -55,10 +61,4 @@ public class UserController {
 	 public boolean removeUser(@PathVariable UUID user_id) {
 		 return userService.removeUser(user_id);
 	 }
-	 
-//	 @PostMapping("/user/login")
-//	 public boolean login(User user) {
-//		 return authenticationService.authenticateUser(user.getPhone(), user.getPassword());
-//	 }
-	 
 }

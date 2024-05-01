@@ -8,6 +8,7 @@ import com.esun.socialMedia.model.User;
 
 public interface UserService {
 	List<User> getAllUser();
+	boolean userIdCheck(UUID uuid);
 	String saveUser(User user);
 	String updateUser(User user, UUID uuid);
 	boolean removeUser(UUID uuid);
